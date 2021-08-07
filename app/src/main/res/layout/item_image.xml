@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true" />
         <TextView
+            android:layout_centerVertical="true"
             android:layout_marginRight="8dp"
             android:layout_toLeftOf="@id/item_favorite_img"
             android:drawableLeft="@drawable/ic_baseline_remove_red_eye"

@@ -12,4 +12,11 @@
        android:id="@+id/test"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_gravity="end|bottom"
+        android:layout_margin="24dp"
+        android:id="@+id/detail_dowload_floating_action"
+        android:src="@drawable/ic_baseline_arrow_downward_24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </FrameLayout>
