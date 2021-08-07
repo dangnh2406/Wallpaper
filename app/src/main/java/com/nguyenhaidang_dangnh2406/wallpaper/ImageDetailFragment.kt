@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.nguyenhaidang_dangnh2406.wallpaper.download.DownLoader
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_image_detail.*
 
@@ -19,11 +20,11 @@ private const val ARG_PARAM2 = "param2"
  * Use the [ImageDetailFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ImageDetailFragment : Fragment() {
+class ImageDetailFragment : Fragment(), View.OnClickListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    var url = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -42,7 +43,7 @@ class ImageDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val bundle: Bundle? = arguments
-        var url = ""
+
         if (bundle != null) {
             Log.d("Tag", "Bundles ${bundle.get("photo")}")
             url = bundle.get("photo").toString()
@@ -50,6 +51,8 @@ class ImageDetailFragment : Fragment() {
         }
 
         Picasso.get().load(url).into(test)
+
+        detail_dowload_floating_action.setOnClickListener(this)
 
         super.onViewCreated(view, savedInstanceState)
     }
@@ -71,5 +74,10 @@ class ImageDetailFragment : Fragment() {
                     putString(ARG_PARAM1, param1)
                 }
             }
+    }
+
+    override fun onClick(v: View?) {
+        var downloadManager = DownLoader()
+        downloadManager.showDownLoad(requireContext(),url)
     }
 }
