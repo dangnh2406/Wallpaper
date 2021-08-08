@@ -16,11 +16,10 @@ class DownLoader {
             .setTitle("Dummy file")
             .setDescription("Download")
             .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
-            .setDestinationUri(Uri.fromFile(file))
-            .setAllowedOverRoaming(true)
+            .setAllowedOverMetered(true)
 
-        val downloadManager = context.getSystemService(DOWNLOAD_SERVICE) as DownloadManager?
-        var downloadID = downloadManager!!.enqueue(request)// enqueue puts the download request in the queue.
+        val downloadManager = context.getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+        downloadManager?.enqueue(request)// enqueue puts the download request in the queue.
     }
 
 }
