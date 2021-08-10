@@ -1,12 +1,16 @@
 package com.nguyenhaidang_dangnh2406.wallpaper
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.nguyenhaidang_dangnh2406.wallpaper.download.DownLoader
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_image_detail.*
@@ -26,6 +30,7 @@ class ImageDetailFragment : Fragment(), View.OnClickListener {
     private var param1: String? = null
     private var param2: String? = null
     var url = ""
+    val PERMISSION_WRITE = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -78,12 +83,32 @@ class ImageDetailFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
+        when (v?.id) {
             R.id.detail_dowload_floating_action -> {
-                var downloadManager = DownLoader()
-                downloadManager.showDownLoad(requireContext(),"https://scontent.fhan5-4.fna.fbcdn.net/v/t1.6435-9/153107776_1100606217103088_4646858894205079265_n.jpg?_nc_cat=104&ccb=1-4&_nc_sid=09cbfe&_nc_ohc=vrc7F76DEhkAX9REZkO&_nc_ht=scontent.fhan5-4.fna&oh=18ce1229a76f517f851dc6e0bfbacdb5&oe=6136706A")
-                Toast.makeText(requireContext(), "Downloaded", Toast.LENGTH_SHORT).show()
+                if (checkPermission()) {
+                    var downloadManager = DownLoader()
+                    downloadManager.showDownLoad(
+                        requireContext(),
+                        url
+                    )
+                    Toast.makeText(requireContext(), "Downloaded", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
+
+    fun checkPermission(): Boolean {
+        val READ_EXTERNAL_PERMISSION =
+            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (READ_EXTERNAL_PERMISSION != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                PERMISSION_WRITE
+            )
+            return false
+        }
+        return true
+    }
+
 }
